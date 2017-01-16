@@ -1,0 +1,82 @@
+{
+    "kind": "List",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "nexus3"
+    },
+    "items": [
+        {
+            "kind": "BuildConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "nexus3"
+            },
+            "spec": {
+                "triggers": [
+                    {
+                        "type": "Generic",
+                        "generic": {
+                            "secret": "secret"
+                        }
+                    },
+                    {
+                        "type": "ImageChange",
+                        "imageChange": {}
+                    },
+                    {
+                        "type": "ConfigChange"
+                    }
+                ],
+                "source": {
+                    "type": "Git",
+                    "git": {
+                        "uri": "https://github.com/jr00n/nexus-os",
+                        "ref": "master"
+                    },
+                    "contextDir": "master"
+                },
+                "strategy": {
+                    "type": "Docker",
+                    "dockerStrategy": {
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "docker.io/sonatype/nexus3:3.0.2"
+                        }
+                    }
+                },
+                "output": {
+                    "to": {
+                        "kind": "ImageStreamTag",
+                        "name": "nexus3:latest",
+                        "namespace": "ci"
+                    }
+                },
+                "resources": {}
+            }
+        },
+        {
+            "kind": "ImageStream",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "sonatype-nexus3"
+            },
+            "spec": {
+                "dockerImageRepository": "docker.io/sonatype/nexus3:3.0.2"
+            }
+        },
+        {
+            "kind": "ImageStream",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "nexus3",
+                "namespace": "ci"
+            },
+            "spec": {
+                "dockerImageRepository": "",
+                "tags": [{
+                    "name": "latest"
+                }]
+            }
+        }
+    ]
+}
