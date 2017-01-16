@@ -4,22 +4,14 @@
     "metadata": {
         "name": "nexus3"
     },
-    "items": [
-        {
+    "items": [{
             "kind": "BuildConfig",
             "apiVersion": "v1",
             "metadata": {
                 "name": "nexus3"
             },
             "spec": {
-                "triggers": [
-                    {
-                        "type": "Generic",
-                        "generic": {
-                            "secret": "secret"
-                        }
-                    },
-                    {
+                "triggers": [{
                         "type": "ImageChange",
                         "imageChange": {}
                     },
@@ -47,8 +39,7 @@
                 "output": {
                     "to": {
                         "kind": "ImageStreamTag",
-                        "name": "nexus3:latest",
-                        "namespace": "ci"
+                        "name": "nexus3:latest"
                     }
                 },
                 "resources": {}
@@ -58,25 +49,10 @@
             "kind": "ImageStream",
             "apiVersion": "v1",
             "metadata": {
-                "name": "sonatype-nexus3"
+                "name": "nexus3"
             },
-            "spec": {
-                "dockerImageRepository": "docker.io/sonatype/nexus3:3.0.2"
-            }
-        },
-        {
-            "kind": "ImageStream",
-            "apiVersion": "v1",
-            "metadata": {
-                "name": "nexus3",
-                "namespace": "ci"
-            },
-            "spec": {
-                "dockerImageRepository": "",
-                "tags": [{
-                    "name": "latest"
-                }]
-            }
+            "spec": {},
+            "status": {}
         }
     ]
 }
